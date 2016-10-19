@@ -36,7 +36,7 @@ public class MyActivity extends Activity implements SensorEventListener{
     private TextView rate;
     private TextView accuracy;
     private TextView sensorInformation;
-    //private static final int SENSOR_TYPE_HEARTRATE = 65538;
+    private static final int SENSOR_TYPE_HEART_RATE = 65538; // wellness passive sensor
     private Sensor mHeartRateSensor;
     private SensorManager mSensorManager;
     private CountDownLatch latch;
@@ -61,7 +61,8 @@ public class MyActivity extends Activity implements SensorEventListener{
         });
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+        //mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+        mHeartRateSensor = mSensorManager.getDefaultSensor(SENSOR_TYPE_HEART_RATE);
 
         if (mHeartRateSensor == null) {
             List<Sensor> sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
@@ -69,10 +70,7 @@ public class MyActivity extends Activity implements SensorEventListener{
                 Log.i(TAG, availableSensor.getName() + ": " + availableSensor.getType());
             }
         }
-        //mSensorManager = ((SensorManager)getSystemService(SENSOR_SERVICE));
-        //mHeartRateSensor = mSensorManager.getDefaultSensor(SENSOR_TYPE_HEARTRATE); // using Sensor Lib2 (Samsung Gear Live)
-        //mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE); // using Sensor Lib (Samsung Gear Live)
-
+        
     }
 
     @Override
