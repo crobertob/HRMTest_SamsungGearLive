@@ -22,7 +22,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.wearable.view.WatchViewStub;
+import android.view.View;
+import android.view.ViewStub;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -46,10 +47,10 @@ public class MyActivity extends Activity implements SensorEventListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         latch = new CountDownLatch(1);
-        final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+        final ViewStub stub = (ViewStub) findViewById(R.id.watch_view_stub);
+        stub.setOnInflateListener(new ViewStub.OnInflateListener() {
             @Override
-            public void onLayoutInflated(WatchViewStub stub) {
+            public void onInflate(ViewStub stub, View inflated) {
                 rate = (TextView) stub.findViewById(R.id.rate);
                 rate.setText("Reading...");
 
@@ -70,7 +71,6 @@ public class MyActivity extends Activity implements SensorEventListener{
                 Log.i(TAG, availableSensor.getName() + ": " + availableSensor.getType());
             }
         }
-        
     }
 
     @Override
