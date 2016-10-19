@@ -26,6 +26,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class MyActivity extends Activity implements SensorEventListener{
@@ -35,7 +36,7 @@ public class MyActivity extends Activity implements SensorEventListener{
     private TextView rate;
     private TextView accuracy;
     private TextView sensorInformation;
-    private static final int SENSOR_TYPE_HEARTRATE = 65562;
+    //private static final int SENSOR_TYPE_HEARTRATE = 65538;
     private Sensor mHeartRateSensor;
     private SensorManager mSensorManager;
     private CountDownLatch latch;
@@ -59,8 +60,17 @@ public class MyActivity extends Activity implements SensorEventListener{
             }
         });
 
-        mSensorManager = ((SensorManager)getSystemService(SENSOR_SERVICE));
-        mHeartRateSensor = mSensorManager.getDefaultSensor(SENSOR_TYPE_HEARTRATE); // using Sensor Lib2 (Samsung Gear Live)
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+
+        if (mHeartRateSensor == null) {
+            List<Sensor> sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+            for (Sensor availableSensor : sensors) {
+                Log.i(TAG, availableSensor.getName() + ": " + availableSensor.getType());
+            }
+        }
+        //mSensorManager = ((SensorManager)getSystemService(SENSOR_SERVICE));
+        //mHeartRateSensor = mSensorManager.getDefaultSensor(SENSOR_TYPE_HEARTRATE); // using Sensor Lib2 (Samsung Gear Live)
         //mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE); // using Sensor Lib (Samsung Gear Live)
 
     }
